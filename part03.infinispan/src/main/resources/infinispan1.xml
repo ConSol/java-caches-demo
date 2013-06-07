@@ -1,0 +1,14 @@
+<infinispan xsi:schemaLocation="urn:infinispan:config:5.2 infinispan-config-5.2.xsd"
+            xmlns="urn:infinispan:config:5.2"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <global>
+        <!-- transport config required when using clustering caches -->
+        <transport nodeName="node1" clusterName="cluster"/>
+    </global>
+    <default>
+        <clustering mode="replication">
+            <async/>
+        </clustering>
+        <eviction maxEntries="1000" strategy="LRU"/>
+    </default>
+</infinispan>

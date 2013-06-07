@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd">
+    <terracottaConfig url="localhost:9510,localhost:9610"/>
+    <cache name="events" maxEntriesLocalHeap="1000">
+        <terracotta consistency="eventual"/>
+    </cache>
+</ehcache>

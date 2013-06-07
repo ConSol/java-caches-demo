@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<tc:tc-config xmlns:tc="http://www.terracotta.org/config"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.terracotta.org/config terracotta-8.xsd">
+    <servers>
+        <mirror-group group-name="my-group">
+            <server host="localhost" name="server1" bind="0.0.0.0">
+                <data>/tmp/terracotta/server1/data</data>
+                <logs>/tmp/terracotta/server1/logs</logs>
+                <index>/tmp/terracotta/server1/index</index>
+                <tsa-port>9510</tsa-port>
+                <jmx-port>9520</jmx-port>
+                <tsa-group-port>9530</tsa-group-port>
+            </server>
+            <server host="localhost" name="server2" bind="0.0.0.0">
+                <data>/tmp/terracotta/server2/data</data>
+                <logs>/tmp/terracotta/server2/logs</logs>
+                <index>/tmp/terracotta/server2/index</index>
+                <tsa-port>9610</tsa-port>
+                <jmx-port>9620</jmx-port>
+                <tsa-group-port>9630</tsa-group-port>
+            </server>
+        </mirror-group>
+    </servers>
+
+    <clients>
+        <logs>logs-%i</logs>
+    </clients>
+</tc:tc-config>

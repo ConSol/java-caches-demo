@@ -1,0 +1,9 @@
+<hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config hazelcast-config-2.1.xsd"
+           xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <map name="events">
+        <eviction-policy>LRU</eviction-policy>
+        <max-size policy="cluster_wide_map_size">1000</max-size>
+        <eviction-percentage>25</eviction-percentage>
+    </map>
+</hazelcast>

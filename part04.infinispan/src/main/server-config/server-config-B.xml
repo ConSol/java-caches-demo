@@ -1,0 +1,13 @@
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinispan:config:5.2 infinispan-config-5.2.xsd"
+        xmlns="urn:infinispan:config:5.2">
+    <global>
+        <transport clusterName="infinispan-cluster" nodeName="Node-B"/>
+    </global>
+    <default>
+        <clustering mode="distribution">
+            <async/>
+        </clustering>
+    </default>
+</infinispan>

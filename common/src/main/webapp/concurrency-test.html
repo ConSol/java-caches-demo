@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>User Event Store</title>
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<h1>User Event Store</h1>
+
+<h2>Concurrency Test</h2>
+
+<div style="float: left; padding-right: 2em;">
+    Post all events<br/>
+    from top to botton.<p/>
+    Countdown:<br/>
+    <span id="countdown" style="font-size: 2em">8</span> seconds.<br/>
+    <span style="font-size: 48pt;">&downarrow;</span>
+    <p/>
+    <button type="button" id="go">Go</button>
+</div>
+<div>
+    <table border="1" id="events">
+        <tr>
+            <td class="user">fabian</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">tobias</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">roland</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">jan</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">daniel</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">thomas</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">uli</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">martin</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">otto</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+        <tr>
+            <td class="user">torsten</td>
+            <td class="message">Event from $host:$port</td>
+        </tr>
+    </table>
+</div>
+<div style="clear: both"></div>
+
+<h2>Search Events</h2>
+<button type="button" id="search">Search</button>
+<div id="result"></div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var start_time,                // When countdown reaches zero.
+            countdown_running = false; // Becomes true when the user clicks "Go".
+
+        // Next start time is when the system clock is a multiple of 10 seconds.
+        // System clock is used to synchonized multiple browsers for concurrency tests.
+        function calculate_start_time() {
+            var date = new Date(),
+                time = date.getTime(),
+                millis_to_next_ten_seconds = 10000 - ( time % 10000 );
+            start_time = time + millis_to_next_ten_seconds;
+        }
+
+        // Update the countdown displayed on the left of the table.
+        function update_countdown() {
+            var date = new Date(),
+                 time = date.getTime(),
+                 seconds_to_start = time > start_time ? 0 : Math.round((start_time - time) / 1000.0);
+            $('#countdown').html(seconds_to_start);
+        }
+
+        // Start the loop updating start_time and countdown.
+        function init_countdown() {
+            if (!countdown_running) {
+                calculate_start_time();
+            }
+            update_countdown();
+            setTimeout(init_countdown, 1000);
+        }
+
+        function post_event(user, message) {
+            $.ajax({
+                dataType: "json",
+                url: "rest/events/" + user,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(message)
+            });
+        }
+
+        // This is called when the countdown reaches zero.
+        function run() {
+            var dt = 500;
+            $.each($('#events').find('tr'), function (i, tr) {
+                var date = new Date(),
+                    time = date.getTime(),
+                    submit_time = Math.round((time + dt) / 500.0) * 500;
+                setTimeout(function () {
+                    var user = $(tr).find('.user').html(),
+                        msg = $(tr).find('.message').html();
+                    post_event(user, msg);
+                    $(tr).css('background-color', 'red');
+                    setTimeout(function () {
+                        $(tr).css('background-color', '');
+                    }, 1000);
+                }, submit_time - time);
+                dt += 1000;
+            });
+            setTimeout(function () {
+                countdown_running = false;
+                $('#go').removeAttr('disabled');
+            }, dt);
+        }
+
+        function init_go_button () {
+            $('#go').click(function () {
+                if (!countdown_running) {
+                    var date = new Date(),
+                        time = date.getTime();
+                    countdown_running = true;
+                    setTimeout(run, start_time - time);
+                    $('#go').attr('disabled','disabled');
+                }
+            });
+        }
+
+        function init_table() {
+            var message_columns = $('td.message'),
+                msg_tmpl = message_columns.first().html();
+            msg_tmpl = msg_tmpl.replace('$host', document.location.hostname);
+            msg_tmpl = msg_tmpl.replace('$port', document.location.port);
+            message_columns.html(msg_tmpl);
+        }
+
+        init_table();
+        init_countdown();
+        init_go_button();
+
+        // -------------------------------------------------------------------
+        // search
+        // -------------------------------------------------------------------
+
+        $('#search').click(function () {
+            $('#result').html('<h2>Search results</h2>');
+            $.each($('#events').find('tr'), function (i, tr) {
+                var user = $(tr).find('.user').html();
+                $.ajax({
+                    dataType: "json",
+                    url: "rest/events/" + user
+                }).done(function (data) {
+                    var div = $('#result');
+                    $.each(data, function (i, event) {
+                        div.append($('<tt>' + user + ': ' + event + '</tt>'));
+                        div.append($('<br/>'));
+                    });
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

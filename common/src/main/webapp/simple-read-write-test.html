@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>User Event Store</title>
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<h1>User Event Store</h1>
+
+<h2>Create User Event</h2>
+
+<form id="post_form">
+    <table>
+        <tr>
+            <td>
+                <label for="post_user">Username:</label>
+            </td>
+            <td>
+                <input id="post_user" type="text" value="fabian"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="message">Event Info:</label>
+            </td>
+            <td>
+                <input id="message" type="text" value="Some event info..."/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<h2>Search Events</h2>
+
+<form id="search_form">
+    <label for="search_user">Username:</label>
+    <input id="search_user" type="text" value="fabian"/>
+    <button type="submit">Search</button>
+</form>
+<div id="search_results"></div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#post_form').submit(function () {
+            $.ajax({
+                dataType: "json",
+                url: "rest/events/" + $('#post_user').val(),
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify($('#message').val())
+            });
+            return false;
+        });
+
+        $('#search_form').submit(function () {
+            $.ajax({
+                dataType: "json",
+                url: "rest/events/" + $('#search_user').val()
+            }).done(function (data) {
+                var div = $('#search_results');
+                div.html('<h2>Events for ' + $('#search_user').val() + '</h2>');
+                $.each(data, function (i, msg) {
+                    div.append($('<tt>' + msg + '</tt>'));
+                    div.append($('<br/>'));
+                });
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
