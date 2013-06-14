@@ -11,7 +11,7 @@
     <artifactId>part03.infinispan</artifactId>
     <packaging>war</packaging>
 
-    <name>Peer-to-Peer Infinispan</name>
+    <name>Infinispan Peer-to-Peer</name>
 
     <dependencies>
 

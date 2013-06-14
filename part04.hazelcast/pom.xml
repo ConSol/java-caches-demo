@@ -11,7 +11,7 @@
     <artifactId>part04.hazelcast</artifactId>
     <packaging>war</packaging>
 
-    <name>Client-Server Hazelcast</name>
+    <name>Hazelcast Client-Server</name>
 
     <dependencies>
 

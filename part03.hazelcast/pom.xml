@@ -11,7 +11,7 @@
     <artifactId>part03.hazelcast</artifactId>
     <packaging>war</packaging>
 
-    <name>Peer-to-Peer Hazelcast</name>
+    <name>Hazelcast Peer-to-Peer</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

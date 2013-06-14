@@ -11,7 +11,7 @@
     <artifactId>part02.ehcache</artifactId>
     <packaging>war</packaging>
 
-    <name>Local Ehcache</name>
+    <name>Ehcache Local</name>
 
     <dependencies>
 

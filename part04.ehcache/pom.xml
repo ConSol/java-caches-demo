@@ -11,7 +11,7 @@
     <artifactId>part04.ehcache</artifactId>
     <packaging>war</packaging>
 
-    <name>Client-Server Ehcache</name>
+    <name>Ehcache Client-Server</name>
 
     <dependencies>
 

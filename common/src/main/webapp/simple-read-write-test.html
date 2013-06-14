@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>User Event Store</title>
+    <title>${project.name}</title>
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<h1>User Event Store</h1>
+<h1>${project.name}</h1>
 
 <h2>Create User Event</h2>
 
@@ -55,6 +55,8 @@
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify($('#message').val())
+            }).error(function () {
+                $('#search_results').append($('<tt><b style="color: red">An error occurred while sending the POST request to the server.</tt><br/>'));
             });
             return false;
         });
@@ -70,6 +72,8 @@
                     div.append($('<tt>' + msg + '</tt>'));
                     div.append($('<br/>'));
                 });
+            }).error(function () {
+                $('#search_results').append($('<tt><b style="color: red">An error occurred while sending the GET request to the server.</tt><br/>'));
             });
             return false;
         });

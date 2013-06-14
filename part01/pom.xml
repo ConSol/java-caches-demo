@@ -11,7 +11,7 @@
     <artifactId>part01</artifactId>
     <packaging>war</packaging>
 
-    <name>ConcurrentMap-based Reference Implementation</name>
+    <name>ConcurrentMap-based Implementation</name>
 
     <dependencies>
 

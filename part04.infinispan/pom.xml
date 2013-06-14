@@ -11,7 +11,7 @@
     <artifactId>part04.infinispan</artifactId>
     <packaging>war</packaging>
 
-    <name>Client-Server Infinispan</name>
+    <name>Infinispan Client-Server</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

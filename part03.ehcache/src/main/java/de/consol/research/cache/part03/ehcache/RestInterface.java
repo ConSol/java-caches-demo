@@ -1,6 +1,5 @@
 package de.consol.research.cache.part03.ehcache;
 
-
 import de.consol.research.cache.common.UserEventList;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;

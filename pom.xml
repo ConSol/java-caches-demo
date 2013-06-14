@@ -82,6 +82,7 @@
                     <webResources>
                         <resource>
                             <!-- filtering will replace ${project.artifactId} in web.xml -->
+                            <!-- and ${project.name} in the HTML files. -->
                             <filtering>true</filtering>
                             <directory>${project.basedir}/../common/src/main/webapp</directory>
                         </resource>
@@ -93,6 +94,9 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.1</version>
+                <configuration>
+                    <path>/</path>
+                </configuration>
             </plugin>
         </plugins>
     </build>

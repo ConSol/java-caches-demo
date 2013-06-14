@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>User Event Store</title>
+    <title>${project.name}</title>
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<h1>User Event Store</h1>
+<h1>${project.name}</h1>
 
 <h2>Concurrency Test</h2>
 
 <div style="float: left; padding-right: 2em;">
     Post all events<br/>
-    from top to botton.<p/>
+    from top to bottom.<p/>
     Countdown:<br/>
     <span id="countdown" style="font-size: 2em">8</span> seconds.<br/>
     <span style="font-size: 48pt;">&downarrow;</span>
@@ -108,7 +108,9 @@
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(message)
-            });
+            }).error(function () {
+                $('#result').append($('<tt><b style="color: red">An error occurred while sending the POST request to the server.</b></tt><br/>'));
+            });;
         }
 
         // This is called when the countdown reaches zero.
@@ -176,6 +178,8 @@
                         div.append($('<tt>' + user + ': ' + event + '</tt>'));
                         div.append($('<br/>'));
                     });
+                }).error(function () {
+                    $('#result').append($('<tt><b style="color: red">An error occurred while sending the GET request to the server.</tt><br/>'));
                 });
             });
         });

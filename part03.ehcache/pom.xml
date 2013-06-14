@@ -11,7 +11,7 @@
     <artifactId>part03.ehcache</artifactId>
     <packaging>war</packaging>
 
-    <name>Peer-to-Peer Ehcache</name>
+    <name>Ehcache Peer-to-Peer</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
