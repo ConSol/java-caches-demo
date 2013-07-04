@@ -30,9 +30,9 @@ public class RestInterface {
     @Path("{user}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void appendEvent(@PathParam("user") String user, String msg) {
+        map.putIfAbsent(user, UserEventList.emptyList());
         boolean success;
         do {
-            map.putIfAbsent(user, UserEventList.emptyList());
             UserEventList oldMsgList = map.get(user);
             UserEventList newMsgList = UserEventList.append(oldMsgList, msg);
             success = map.replace(user, oldMsgList, newMsgList);

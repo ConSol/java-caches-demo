@@ -31,9 +31,9 @@ public class RestInterface {
     @Path("{user}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void appendEvent(@PathParam("user") String user, String msg) {
+        cache.putIfAbsent(new Element(user, UserEventList.emptyList()));
         boolean success;
         do {
-            cache.putIfAbsent(new Element(user, UserEventList.emptyList()));
             Element oldElement = cache.get(user);
             UserEventList oldList = (UserEventList) oldElement.getObjectValue();
             UserEventList newList = UserEventList.append(oldList, msg);
